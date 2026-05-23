@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">Neural Canvas</string>
+    <string name="subtitle">Arbitrary style transfer on device</string>
+    <string name="content_title">Исходное изображение</string>
+    <string name="style_title">Изображение стиля</string>
+    <string name="result_title">Результат</string>
+    <string name="select_content">Галерея</string>
+    <string name="take_photo">Камера</string>
+    <string name="select_style">Галерея</string>
+    <string name="built_in_styles">Примеры</string>
+    <string name="select_built_in_style">Выберите встроенный стиль</string>
+    <string name="no_built_in_styles">В assets/styles нет встроенных стилей.</string>
+    <string name="stylize">Применить стиль</string>
+    <string name="save">Сохранить результат</string>
+    <string name="use_gpu">Использовать GPU Delegate</string>
+    <string name="cpu_threads">Потоки CPU</string>
+    <string name="metrics_title">Метрики выполнения</string>
+    <string name="metrics_placeholder">Метрики появятся после запуска inference.</string>
+    <string name="hint_content">Выберите фотографию, композиция которой сохраняется.</string>
+    <string name="hint_style">Выберите изображение художественного стиля.</string>
+    <string name="hint_result">Здесь появится результат inference.</string>
+    <string name="choose_images_first">Сначала выберите исходное изображение и стиль.</string>
+    <string name="image_load_failed">Не удалось прочитать выбранное изображение.</string>
+    <string name="camera_open_failed">Не удалось открыть камеру.</string>
+    <string name="inference_failed">Не удалось выполнить inference.</string>
+    <string name="saved_result">Результат сохранен в Pictures/NeuralCanvas.</string>
+    <string name="save_failed">Не удалось сохранить изображение.</string>
+</resources>

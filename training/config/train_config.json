@@ -1,0 +1,14 @@
+{
+  "image_size": 256,
+  "batch_size": 4,
+  "epochs": 10,
+  "steps_per_epoch": 500,
+  "learning_rate": 0.0001,
+  "content_weight": 1.0,
+  "style_weight": 5.0,
+  "tv_weight": 0.000001,
+  "content_dir": "data/processed/content/train",
+  "style_dir": "data/processed/style/train",
+  "checkpoint_dir": "artifacts/checkpoints",
+  "keras_model_path": "artifacts/style_transfer.keras"
+}

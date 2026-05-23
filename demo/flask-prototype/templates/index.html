@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Neural Canvas - Flask Demo</title>
+    <style>
+        :root {
+            color-scheme: dark;
+            --bg: #11121a;
+            --surface: #1d2030;
+            --border: #323751;
+            --text: #f4f2fb;
+            --muted: #b2b6cc;
+            --accent: #8c7cff;
+            --danger: #ffb4ab;
+        }
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            font-family: Inter, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+        }
+        main { max-width: 1120px; margin: 0 auto; padding: 34px 20px 50px; }
+        h1 { margin: 0 0 6px; font-size: 32px; }
+        .sub { margin: 0 0 26px; color: var(--muted); }
+        form {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 20px;
+            display: flex;
+            gap: 16px;
+            align-items: end;
+            flex-wrap: wrap;
+        }
+        label { display: block; color: var(--muted); margin-bottom: 7px; }
+        input[type=file] { max-width: 300px; color: var(--text); }
+        button {
+            border: 0;
+            border-radius: 10px;
+            background: var(--accent);
+            color: #fff;
+            font-weight: 600;
+            padding: 12px 19px;
+            cursor: pointer;
+        }
+        .error {
+            margin: 18px 0 0;
+            border: 1px solid #6c3c41;
+            background: #342227;
+            color: var(--danger);
+            border-radius: 12px;
+            padding: 13px 16px;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 16px;
+            margin-top: 26px;
+        }
+        .card {
+            min-height: 326px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 14px;
+        }
+        .card h2 { margin: 0 0 12px; font-size: 17px; }
+        .preview {
+            height: 272px;
+            border-radius: 10px;
+            border: 1px dashed var(--border);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--muted);
+            overflow: hidden;
+        }
+        img { width: 100%; height: 100%; object-fit: contain; background: #0c0d14; }
+        .metrics {
+            margin-top: 18px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 16px 20px;
+        }
+        .metrics h2 { margin: 0 0 12px; font-size: 17px; }
+        .metric-grid { display: flex; gap: 22px; flex-wrap: wrap; color: var(--muted); }
+        .metric-grid b { display: block; margin-top: 3px; color: var(--text); }
+        @media (max-width: 780px) {
+            .grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+<main>
+    <h1>Neural Canvas</h1>
+    <p class="sub">Arbitrary image style transfer через TensorFlow Lite</p>
+
+    <form method="post" enctype="multipart/form-data">
+        <div>
+            <label for="content_image">Исходное изображение</label>
+            <input id="content_image" type="file" name="content_image" accept=".jpg,.jpeg,.png,image/*" required>
+        </div>
+        <div>
+            <label for="style_image">Изображение стиля</label>
+            <input id="style_image" type="file" name="style_image" accept=".jpg,.jpeg,.png,image/*" required>
+        </div>
+        <button type="submit">Применить стиль</button>
+    </form>
+
+    {% if error %}
+    <div class="error">{{ error }}</div>
+    {% endif %}
+
+    <section class="grid">
+        <div class="card">
+            <h2>Исходное изображение</h2>
+            <div class="preview">
+                {% if content_url %}<img src="{{ content_url }}" alt="Исходное изображение">{% else %}Загрузите content image{% endif %}
+            </div>
+        </div>
+        <div class="card">
+            <h2>Стиль</h2>
+            <div class="preview">
+                {% if style_url %}<img src="{{ style_url }}" alt="Стиль">{% else %}Загрузите style image{% endif %}
+            </div>
+        </div>
+        <div class="card">
+            <h2>Результат</h2>
+            <div class="preview">
+                {% if result_url %}<img src="{{ result_url }}" alt="Результат">{% else %}Результат появится после inference{% endif %}
+            </div>
+        </div>
+    </section>
+
+    {% if benchmark %}
+    <section class="metrics">
+        <h2>Метрики выполнения</h2>
+        <div class="metric-grid">
+            <span>Input Image Size<b>{{ benchmark.input_size }}</b></span>
+            <span>Pre-process<b>{{ benchmark.preprocess_ms }} ms</b></span>
+            <span>Predicting style<b>{{ benchmark.predicting_ms }} ms</b></span>
+            <span>Transferring style<b>{{ benchmark.transferring_ms }} ms</b></span>
+            <span>Post-process<b>{{ benchmark.postprocess_ms }} ms</b></span>
+            <span>Full execution<b>{{ benchmark.full_ms }} ms</b></span>
+        </div>
+    </section>
+    {% endif %}
+</main>
+</body>
+</html>
